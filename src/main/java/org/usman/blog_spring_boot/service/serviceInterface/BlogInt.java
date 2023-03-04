@@ -23,4 +23,5 @@ public interface BlogInt {
 
     List<BlogGeneralDto> searchInCentent(String string);
 
+    List<BlogGeneralDto> searchInTitle(String id);
 }

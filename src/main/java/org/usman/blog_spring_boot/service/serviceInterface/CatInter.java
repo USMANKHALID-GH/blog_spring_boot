@@ -5,7 +5,7 @@ import org.usman.blog_spring_boot.dto.CatDto;
 import org.usman.blog_spring_boot.utility.Cat;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public interface CatInter {
 
