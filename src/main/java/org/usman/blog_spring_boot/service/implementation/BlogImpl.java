@@ -38,25 +38,34 @@ public class BlogImpl implements BlogInt, CatInter {
 
     @Override
     public CatDto findCat(Long id) {
-        System.out.println("/////////////////////"+id);
+
         Optional<Cat> cat=catRepository.findById(id);
-        return mapperDto.entityToCatDto(cat.get());
+        if(cat.isPresent()){
+        return mapperDto.entityToCatDto(cat.get());}
+        else
+            throw new IdNotFoundException("there is no such Id "+id);
+
     }
 
     @Override
     public String updateCat(Long id, CatDto catDto) {
         Optional<Cat> cat=catRepository.findById(id);
-        System.out.println(cat.get().getCategory()+"222222222222222222222222222222222222");
+        if(cat.isPresent()){
+            Cat cat2=cat.map(cat1 -> {
+                if(catDto.getCategory()!="" || catDto.getCategory()!=null){
+            cat1.setCategory(catDto.getCategory());}
 
-        Cat cat2=cat.map(cat1 -> {
-            cat1.setCategory(catDto.getCategory());
             return cat1;
-        }).get();
+
+
+            }).get();
         System.out.println(cat2.getCategory());
         catRepository.save(cat2);
 
 
-        return "Updated";
+        return "Updated";}
+        else
+            throw new IdNotFoundException("there is no such Id "+id);
     }
 
     @Override
@@ -70,9 +79,12 @@ public class BlogImpl implements BlogInt, CatInter {
 
     @Override
     public String deleteCat(Long id) {
-          catRepository.deleteById(id);
+        if(catRepository.findById(id).isPresent()){
+           catRepository.deleteById(id);
         return "deleted"
-                ;
+                ;}
+        else
+            throw new IdNotFoundException("there is no such Id "+id);
     }
 
     @Override
@@ -137,24 +149,34 @@ public class BlogImpl implements BlogInt, CatInter {
     @Override
     public String updateBlog(Long id,BlogGeneralDto blogGeneralDto) {
         Optional<Blog> cat=blogRepository.findById(id);
+        if(cat.isPresent()){
 
 
         Blog blog1=cat.map(blog -> {
-            blog.setContent(blogGeneralDto.getContent());
-            blog.setTitle(blogGeneralDto.getTitle());
-            blog.setImage(blogGeneralDto.getImage());
+            if(blogGeneralDto.getContent()!="" || blogGeneralDto.getContent()!=""){
+            blog.setContent(blogGeneralDto.getContent());}
+            if(blogGeneralDto.getTitle()!="" || blogGeneralDto.getContent()!=null){
+            blog.setTitle(blogGeneralDto.getTitle());}
+            if(blogGeneralDto.getImage()!=""||blogGeneralDto.getImage()!=null){
+                blog.setImage(blogGeneralDto.getImage());
+            }
+
             return blog;
         }).get();
 
         blogRepository.save(blog1);
 
 
-        return "Updated";
+        return "Updated";}
+        else throw new IdNotFoundException("there is no such Id "+id);
     }
 
     @Override
     public String deleteBlog(Long id) {
+
+        if(blogRepository.findById(id).isPresent()){
          blogRepository.deleteById(id);
-        return "Deleted";
+        return "Deleted";}
+        else throw new IdNotFoundException("there is no such Id "+id);
     }
 }
