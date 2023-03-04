@@ -57,7 +57,7 @@ public class CatController {
         return blog.deleteCat(name);
     }
 
-    @GetMapping("cat/all")
+    @GetMapping("/all")
     public List<CatDto> getAllCat(){
        return blog.getAll();
     }

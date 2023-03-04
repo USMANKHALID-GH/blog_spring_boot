@@ -3,12 +3,13 @@ package org.usman.blog_spring_boot.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.usman.blog_spring_boot.utility.Blog;
+import org.usman.blog_spring_boot.utility.Cat;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class BlogCreateDto {
+public class BlogDto {
 
     private  Long id;
     @NotNull(message="Title must be provided")
@@ -18,5 +19,5 @@ public class BlogCreateDto {
     private String image;
     @NotNull(message="date created must be provided")
     private Date dateCreated;
-    private List<Blog> blog;
+    private Cat cat;
 }

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Data
 @AllArgsConstructor
@@ -23,8 +24,8 @@ public class Blog {
     private String content;
     private String image;
     @NotNull(message="date created must be provided")
-    private Date dateCreated;
+    private LocalDate dateCreated;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER)
     private Cat cat;
 }

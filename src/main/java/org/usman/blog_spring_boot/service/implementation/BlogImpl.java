@@ -3,6 +3,7 @@ package org.usman.blog_spring_boot.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.usman.blog_spring_boot.Error.IdNotFoundException;
+import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
 import org.usman.blog_spring_boot.dto.CatDto;
 import org.usman.blog_spring_boot.mapperDto.MapperDto;
@@ -13,6 +14,7 @@ import org.usman.blog_spring_boot.service.serviceInterface.CatInter;
 import org.usman.blog_spring_boot.utility.Blog;
 import org.usman.blog_spring_boot.utility.Cat;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,15 +81,40 @@ public class BlogImpl implements BlogInt, CatInter {
     }
 
     @Override
-    public BlogGeneralDto saveBlog(BlogGeneralDto blogGeneralDto) {
-        Blog blog =mapperDto.dtoToEntity(blogGeneralDto);
-        blogRepository.save(blog);
-        return  mapperDto.entityToDto(blog);
+    public List<BlogGeneralDto> searchInCentent(String string) {
+
+        Optional<List<Blog>> blogs=blogRepository.findBySearchParameter(string);
+        System.out.println(blogs.get()+"000000000000000000000000000000000000000000000000000");
+        List<BlogGeneralDto> blogGeneralDtos=mapperDto.entityToDto(blogs.get());
+        return blogGeneralDtos;
+
+
+    }
+
+    @Override
+    public BlogGeneralDto saveBlog(BlogGeneralDto blogGeneralDto, Long id) {
+        Optional<Cat> cat =catRepository.findById(id);
+        System.out.println("...................????????????"+cat.get());
+        if(cat.isPresent()){
+
+            Blog blog =mapperDto.dtoToEntity(blogGeneralDto);
+            blog.setDateCreated(LocalDate.now());
+            blog.setCat(cat.get());
+            System.out.println("................"+blog.getDateCreated());
+            blogRepository.save(blog);
+            return  mapperDto.entityToDto(blog);
+        }
+        else
+            throw new IdNotFoundException("there is no such Id "+id);
     }
 
     @Override
     public List<BlogGeneralDto> showAll() {
-        return mapperDto.entityToDto(blogRepository.findAll());
+        System.out.println("Service Class!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        List<Blog> blogs=blogRepository.findAll();
+        System.out.println("list is gotten......................................");
+        List<BlogGeneralDto> blogDtos=mapperDto.entityToDto(blogs);
+        return blogDtos;
     }
 
     @Override
@@ -97,5 +124,37 @@ public class BlogImpl implements BlogInt, CatInter {
         return  mapperDto.entityToDto(blog.get());}
         else
             throw new IdNotFoundException("there is no such Id "+id);
+
+    }
+
+    @Override
+    public List<BlogDto> findAllBlod() {
+        List<Blog> blogs=blogRepository.findAll();
+        List<BlogDto> blogDtos=mapperDto.entityToBlogDto(blogs);
+        return blogDtos;
+    }
+
+    @Override
+    public String updateBlog(Long id,BlogGeneralDto blogGeneralDto) {
+        Optional<Blog> cat=blogRepository.findById(id);
+
+
+        Blog blog1=cat.map(blog -> {
+            blog.setContent(blogGeneralDto.getContent());
+            blog.setTitle(blogGeneralDto.getTitle());
+            blog.setImage(blogGeneralDto.getImage());
+            return blog;
+        }).get();
+
+        blogRepository.save(blog1);
+
+
+        return "Updated";
+    }
+
+    @Override
+    public String deleteBlog(Long id) {
+         blogRepository.deleteById(id);
+        return "Deleted";
     }
 }
