@@ -21,7 +21,7 @@ public class CatController {
     @Autowired
     private MapperDto mapperDto;
 
-
+//saving cat api
     @PostMapping("/save")
     public String saveCat(@RequestBody @Valid CatDto catDto){
 
@@ -33,13 +33,15 @@ public class CatController {
         return "saved";
     }
 
+
+//    find cat by id api
     @GetMapping("/find/{id}")
     public  CatDto findCatById(@PathVariable("id") Long id)throws IdNotFoundException{
 
          return  blog.findCat(id);
 
     }
-
+//updating cat api
     @PutMapping("/update/{id}")
     public  String updatecat(@PathVariable("id") Long id,
                              @RequestBody @Valid CatDto catDto)throws IdNotFoundException {
@@ -49,16 +51,19 @@ public class CatController {
 
     }
 
+//    getting cat by name api
     @GetMapping("/findby/{name}")
     public CatDto findByCatName(@PathVariable("name") String name){
         return blog.findByName(name);
     }
 
+//    deleting cat using id api
     @DeleteMapping("/delete/{id}")
     public String deleteByCatId(@PathVariable("id") Long name)throws IdNotFoundException{
         return blog.deleteCat(name);
     }
 
+//    getting  all cat api
     @GetMapping("/all")
     public List<CatDto> getAllCat(){
        return blog.getAll();
