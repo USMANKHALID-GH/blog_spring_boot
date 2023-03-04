@@ -14,12 +14,15 @@ import org.usman.blog_spring_boot.service.serviceInterface.CatInter;
 import org.usman.blog_spring_boot.utility.Blog;
 import org.usman.blog_spring_boot.utility.Cat;
 
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BlogImpl implements BlogInt, CatInter {
+
+
 
     @Autowired
     private BlogRepository blogRepository;
