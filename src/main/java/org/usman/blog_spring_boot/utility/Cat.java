@@ -25,6 +25,6 @@ public class Cat {
     private String category;
 
 
-    @OneToMany(mappedBy = "cat")
-    private List<Blog> blog;
+//    @OneToMany(mappedBy = "cat")
+//    private List<Blog> blog;
 }

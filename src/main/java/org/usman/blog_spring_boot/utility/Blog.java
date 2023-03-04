@@ -26,6 +26,8 @@ public class Blog {
     @NotNull(message="date created must be provided")
     private LocalDate dateCreated;
 
-    @ManyToOne( fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER,optional = false)
+
+    @JoinColumn(name = "cat_id", nullable = false)
     private Cat cat;
 }
