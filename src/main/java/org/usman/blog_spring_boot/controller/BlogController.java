@@ -3,7 +3,9 @@ package org.usman.blog_spring_boot.controller;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.web.bind.annotation.*;
+import org.usman.blog_spring_boot.Error.IdNotFoundException;
 import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
 import org.usman.blog_spring_boot.dto.CatDto;
@@ -25,7 +27,8 @@ public class BlogController {
     }
 
     @PostMapping("/save/{id}")
-    public BlogGeneralDto createBlog(@RequestBody @Valid BlogGeneralDto blogGeneralDto, @PathVariable("id") Long id){
+    public BlogGeneralDto createBlog(@RequestBody @Valid BlogGeneralDto blogGeneralDto,
+                                     @PathVariable("id") Long id)throws IdNotFoundException{
         System.out.println(".........................."+id);
         System.out.println("///////////////////////////////////"+blogGeneralDto.toString());
         return blog.saveBlog(blogGeneralDto,id);
@@ -37,7 +40,7 @@ public class BlogController {
     }
 
     @GetMapping("/find/{id}")
-    public BlogGeneralDto findBlogById(@PathVariable("id") Long id){
+    public BlogGeneralDto findBlogById(@PathVariable("id") Long id)throws IdNotFoundException{
         return blog.blogFindById(id);
     }
 
@@ -47,7 +50,8 @@ public class BlogController {
     }
 
     @PutMapping("/update/{id}")
-    public  String updatecat(@PathVariable("id") Long id,  @RequestBody @Valid BlogGeneralDto catDto){
+    public  String updatecat(@PathVariable("id") Long id,
+                             @RequestBody @Valid BlogGeneralDto catDto)throws IdNotFoundException{
 
 
           return blog.updateBlog(id,catDto);
@@ -55,7 +59,7 @@ public class BlogController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteByCatId(@PathVariable("id") Long name){
+    public String deleteByCatId(@PathVariable("id") Long name) throws IdNotFoundException {
         return blog.deleteBlog(name);
     }
 
