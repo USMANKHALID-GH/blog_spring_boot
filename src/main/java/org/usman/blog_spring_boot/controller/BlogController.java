@@ -74,7 +74,10 @@ public class BlogController {
 //    searching in centent api
     @GetMapping("/search/{sentence}")
     public  List<BlogGeneralDto> searchForPhrase(@PathVariable("sentence") String sentence) throws PhraseNotFoundEXception {
-        System.out.println("/////////////////////////////////////////////"+sentence);
+
+
+
+
         return  blog.searchInCentent(sentence);
     }
 
@@ -85,6 +88,18 @@ public class BlogController {
         }
 
 
+    //searching for in both title and content
+    @GetMapping("find/any/{string}")
+    public List<BlogGeneralDto> SearchAny(@PathVariable("string") String string) throws  PhraseNotFoundEXception {
+        return  blog.searchAll(string,string);
+    }
+
+
+    //searching for in both title and content
+    @GetMapping("findby/cat/{id}")
+    public List<BlogGeneralDto> SearchByCat(@PathVariable("id") int id) throws IdNotFoundException {
+        return  blog.findByCat(id);
+    }
 
 
 
