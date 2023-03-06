@@ -22,4 +22,10 @@ public interface BlogRepository  extends JpaRepository<Blog,Long> {
     List<Blog>  findByContentContaining(String string);
 
 
+    List<Blog> findByTitleOrContentContaining(String string , String s);
+
+    @Query(value = "FROM Blog blog where blog.cat.id=:id")
+    List<Blog> findAllByCat(@Param("id") int id);
+
+
 }
