@@ -1,6 +1,7 @@
 package org.usman.blog_spring_boot.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.usman.blog_spring_boot.Error.IdNotFoundException;
 import org.usman.blog_spring_boot.Error.PhraseNotFoundEXception;
@@ -133,8 +134,29 @@ public class BlogImpl implements BlogInt, CatInter {
 
     }
 
+//    search in title and content
+    @Override
+    public List<BlogGeneralDto> searchAll(String string ,String string1) {
+        List<Blog> blogs=blogRepository.findByTitleOrContentContaining(string,string1);
+        if(blogs.isEmpty()){
+        return  mapperDto.entityToDto(blogs);}
+        else
+            throw  new PhraseNotFoundEXception("this phrase cant not be found: "+ string);
+    }
 
-//    saving a blog
+
+//    find by cat id
+    @Override
+    public List<BlogGeneralDto> findByCat(int integer) {
+        List<Blog> blogs= blogRepository.findAllByCat(integer);
+        if(blogs.isEmpty()){
+        return mapperDto.entityToDto(blogs);}
+        else
+            throw  new PhraseNotFoundEXception("there is no id associatied with this : "+integer);
+    }
+
+
+    //    saving a blog
     @Override
     public BlogGeneralDto saveBlog(BlogGeneralDto blogGeneralDto, Long id) {
         Optional<Cat> cat =catRepository.findById(id);
@@ -219,4 +241,9 @@ public class BlogImpl implements BlogInt, CatInter {
         return "Deleted";}
         else throw new IdNotFoundException("there is no such Id "+id);
     }
+
+
+
+
+
 }
