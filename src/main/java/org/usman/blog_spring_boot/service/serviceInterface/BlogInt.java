@@ -23,5 +23,9 @@ public interface BlogInt {
 
     List<BlogGeneralDto> searchInCentent(String string);
 
-    List<BlogGeneralDto> searchInTitle(String id);
+    List<BlogGeneralDto> searchInTitle(String string);
+
+    List<BlogGeneralDto> searchAll(String string ,String string1);
+
+    List<BlogGeneralDto> findByCat(int integer);
 }

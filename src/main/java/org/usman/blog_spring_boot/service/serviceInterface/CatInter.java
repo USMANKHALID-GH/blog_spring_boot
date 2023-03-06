@@ -22,4 +22,6 @@ public interface CatInter {
     List<CatDto> getAll();
 
 
+
+
 }
