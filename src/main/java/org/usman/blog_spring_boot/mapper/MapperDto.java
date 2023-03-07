@@ -1,12 +1,12 @@
-package org.usman.blog_spring_boot.mapperDto;
+package org.usman.blog_spring_boot.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
-import org.usman.blog_spring_boot.dto.CatDto;
-import org.usman.blog_spring_boot.utility.Blog;
-import org.usman.blog_spring_boot.utility.Cat;
+import org.usman.blog_spring_boot.dto.CategoryDto;
+import org.usman.blog_spring_boot.model.Blog;
+import org.usman.blog_spring_boot.model.Cat;
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ public interface MapperDto{
 
 
 
-    CatDto entityToCatDto(Cat cat);
-    List<CatDto> entityCatToDto(List<Cat> cats);
+    CategoryDto entityToCatDto(Cat cat);
+    List<CategoryDto> entityCatToDto(List<Cat> cats);
 
-    Cat dtoToCatEntity(CatDto dto);
-    List<Cat> dtoToCatEntity(List<CatDto> dto);
+    Cat dtoToCatEntity(CategoryDto dto);
+    List<Cat> dtoToCatEntity(List<CategoryDto> dto);
 
 
     Blog dtoToEntity(BlogGeneralDto dto);
