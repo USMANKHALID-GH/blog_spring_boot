@@ -1,4 +1,4 @@
-package org.usman.blog_spring_boot.Error;
+package org.usman.blog_spring_boot.error;
 
 public class PhraseNotFoundEXception extends RuntimeException{
 

@@ -5,8 +5,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.usman.blog_spring_boot.Error.IdNotFoundException;
-import org.usman.blog_spring_boot.Error.PhraseNotFoundEXception;
+import org.usman.blog_spring_boot.error.IdNotFoundException;
+import org.usman.blog_spring_boot.error.PhraseNotFoundEXception;
 
 import java.util.HashMap;
 import java.util.Map;
