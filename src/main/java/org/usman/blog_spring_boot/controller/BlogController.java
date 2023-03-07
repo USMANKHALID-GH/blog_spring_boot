@@ -1,16 +1,16 @@
 package org.usman.blog_spring_boot.controller;
 
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.usman.blog_spring_boot.Error.IdNotFoundException;
-import org.usman.blog_spring_boot.Error.PhraseNotFoundEXception;
+import org.usman.blog_spring_boot.error.IdNotFoundException;
+import org.usman.blog_spring_boot.error.PhraseNotFoundEXception;
 import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
-import org.usman.blog_spring_boot.dto.CatDto;
-import org.usman.blog_spring_boot.service.implementation.BlogImpl;
+import org.usman.blog_spring_boot.mapper.BlogMapper;
+import org.usman.blog_spring_boot.service.implementation.CategoryServiceImp;
 
 
 import java.util.List;
@@ -20,85 +20,77 @@ import java.util.List;
 public class BlogController {
 
     @Autowired
-    private BlogImpl blog;
-//main page
-    @GetMapping("/")
-    public  String hello(){
-        return  "hello!!!!!!!!!!!";
-    }
+    private CategoryServiceImp service;
+    @Autowired
+    private BlogMapper mapper;
 
-//    saving blog APi
-    @PostMapping("/save/{id}")
-    public BlogGeneralDto createBlog(@RequestBody @Valid BlogGeneralDto blogGeneralDto,
+
+
+    @PostMapping("/{id}")
+    public ResponseEntity<BlogGeneralDto> createBlog(
+                                      @RequestBody @Valid BlogGeneralDto blogGeneralDto,
                                      @PathVariable("id") Long id)throws IdNotFoundException{
-        System.out.println(".........................."+id);
+         return  new ResponseEntity<>(service.saveBlog(blogGeneralDto,id), HttpStatus.CREATED);
+}
 
-        return blog.saveBlog(blogGeneralDto,id);
+
+    @GetMapping("/")
+    public ResponseEntity<List<BlogGeneralDto>>showAllBlog(){
+        return  new ResponseEntity<>(service.showAllBlog(),HttpStatus.ACCEPTED);
     }
 
-//    showing all blog api
-    @GetMapping("/all")
-    public List<BlogGeneralDto> showAllBlog(){
-        return blog.showAll();
+    @GetMapping("{id}")
+    public ResponseEntity<BlogGeneralDto> findBlogById(@PathVariable("id") Long id)throws IdNotFoundException{
+        return new ResponseEntity<>(service.FindByBlogId(id),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    get blog by id api
-    @GetMapping("/find/{id}")
-    public BlogGeneralDto findBlogById(@PathVariable("id") Long id)throws IdNotFoundException{
-        return blog.blogFindById(id);
-    }
 
-//    and error with this api getting all blog
     @GetMapping("/allblog")
-    public List<BlogDto> AllBlog(){
-        return blog.findAllBlod();
+    public ResponseEntity<List<BlogDto>> AllBlog(){
+
+        return  new ResponseEntity<>(mapper.toDto(service.findAllBlog()),HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
 
-//    updating blog api
-    @PutMapping("/update/{id}")
-    public  String updatecat(@PathVariable("id") Long id,
+
+    @PutMapping("/{id}")
+    public  ResponseEntity<String> updatecat(@PathVariable("id") Long id,
                              @RequestBody @Valid BlogGeneralDto catDto)throws IdNotFoundException{
 
 
-          return blog.updateBlog(id,catDto);
+          return new ResponseEntity<>(service.updateBlog(id,catDto),HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 
-//    deleting blog api
-    @DeleteMapping("/delete/{id}")
-    public String deleteByCatId(@PathVariable("id") Long name) throws IdNotFoundException {
-        return blog.deleteBlog(name);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteByCatId(@PathVariable("id") Long name) throws IdNotFoundException {
+        return new ResponseEntity<>(service.deleteBlog(name),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    searching in centent api
-    @GetMapping("/search/{sentence}")
-    public  List<BlogGeneralDto> searchForPhrase(@PathVariable("sentence") String sentence) throws PhraseNotFoundEXception {
 
-
-
-
-        return  blog.searchInCentent(sentence);
+    @GetMapping("/{sentence}/search")
+    public  ResponseEntity<List<BlogGeneralDto>> searchForPhrase(@PathVariable("sentence") String sentence) throws PhraseNotFoundEXception {
+            return  new ResponseEntity<>(service.searchInContent(sentence) ,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//searching for a title api
-        @GetMapping("findby/{string}")
-        public List<BlogGeneralDto> SearchTitle(@PathVariable("string") String string) throws  PhraseNotFoundEXception{
-         return  blog.searchInTitle(string);
+
+        @GetMapping("/{string}/title")
+        public ResponseEntity<List<BlogGeneralDto>> SearchTitle(@PathVariable("string") String string) throws  PhraseNotFoundEXception{
+         return new ResponseEntity<>(service.searchInTitle(string) , HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
 
-    //searching for in both title and content
-    @GetMapping("find/any/{string}")
-    public List<BlogGeneralDto> SearchAny(@PathVariable("string") String string) throws  PhraseNotFoundEXception {
-        return  blog.searchAll(string,string);
+    @GetMapping("/{string}/title_content")
+    public ResponseEntity<List<BlogGeneralDto>> SearchAny(@PathVariable("string") String string) throws  PhraseNotFoundEXception {
+        return  new ResponseEntity<>(service.searchTitleOrContent(string,string),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
-    //searching for in both title and content
-    @GetMapping("findby/cat/{id}")
-    public List<BlogGeneralDto> SearchByCat(@PathVariable("id") int id) throws IdNotFoundException {
-        return  blog.findByCat(id);
+
+    @GetMapping("/{id}/category")
+    public ResponseEntity<List<BlogGeneralDto>> SearchByCat(@PathVariable("id") int id) throws IdNotFoundException {
+        return  new ResponseEntity<>(service.findByCat(id),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
