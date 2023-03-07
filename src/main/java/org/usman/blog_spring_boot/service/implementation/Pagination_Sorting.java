@@ -6,9 +6,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
-import org.usman.blog_spring_boot.mapperDto.MapperDto;
+import org.usman.blog_spring_boot.mapper.MapperDto;
 import org.usman.blog_spring_boot.respository.BlogRepository;
-import org.usman.blog_spring_boot.utility.Blog;
+import org.usman.blog_spring_boot.model.Blog;
 
 import java.util.List;
 import java.util.stream.Collectors;

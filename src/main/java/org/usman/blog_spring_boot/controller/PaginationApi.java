@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
-import org.usman.blog_spring_boot.service.implementation.BlogImpl;
 import org.usman.blog_spring_boot.service.implementation.Pagination_Sorting;
 
 import java.util.List;

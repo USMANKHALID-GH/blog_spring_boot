@@ -1,31 +1,30 @@
-package org.usman.blog_spring_boot.service.serviceInterface;
+package org.usman.blog_spring_boot.service;
 
 import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
-import org.usman.blog_spring_boot.utility.Blog;
+import org.usman.blog_spring_boot.model.Blog;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface BlogInt {
+public interface BlogService {
     BlogGeneralDto saveBlog(BlogGeneralDto blogGeneralDto, Long id);
 
-    List<BlogGeneralDto> showAll();
+    List<BlogGeneralDto> showAllBlog();
 
-    BlogGeneralDto blogFindById(Long id);
+    BlogGeneralDto FindByBlogId(Long id);
 
 
-    List<BlogDto> findAllBlod();
+    List<Blog> findAllBlog();
 
     String updateBlog(Long id, BlogGeneralDto blogGeneralDto);
 
     String deleteBlog(Long id);
 
-    List<BlogGeneralDto> searchInCentent(String string);
+    List<BlogGeneralDto> searchInContent(String string);
 
     List<BlogGeneralDto> searchInTitle(String string);
 
-    List<BlogGeneralDto> searchAll(String string ,String string1);
+    List<BlogGeneralDto> searchTitleOrContent(String string , String string1);
 
     List<BlogGeneralDto> findByCat(int integer);
 }
