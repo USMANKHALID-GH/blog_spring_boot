@@ -158,7 +158,10 @@ public class CategoryServiceImp implements BlogService, CategoryService {
 
     @Override
     public BlogGeneralDto saveBlog(BlogGeneralDto blogGeneralDto, Long id) {
+
+
         Optional<Cat> cat = categoryRepository.findById(id);
+        
 
         if(cat.isPresent()){
 
@@ -169,7 +172,8 @@ public class CategoryServiceImp implements BlogService, CategoryService {
 
             blog.setCat(cat.get());
 
-            blogRepository.save(blog);
+            Blog blog1=blogRepository.save(blog);
+            log.info(blog1+"bloggggggggggggggggg");
             return  mapper.entityToDto(blog);
         }
         else

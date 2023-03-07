@@ -29,7 +29,7 @@ public class CategoryController {
     @PostMapping("/")
     public ResponseEntity<String> saveCategory(@RequestBody @Valid CategoryDto categoryDto){
         service.saveCategory(mapper.dtoToCatEntity(categoryDto));
-        return new ResponseEntity<>("saved", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("saved", HttpStatus.CREATED);
     }
 
 
@@ -37,7 +37,7 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoryDto> findCategoryById(@PathVariable("id") Long id)throws IdNotFoundException{
 
-         return  new ResponseEntity<>(service.findCategory(id),HttpStatus.INTERNAL_SERVER_ERROR);
+         return  new ResponseEntity<>(service.findCategory(id),HttpStatus.ACCEPTED);
 
     }
 
@@ -46,25 +46,25 @@ public class CategoryController {
                              @RequestBody @Valid CategoryDto categoryDto)throws IdNotFoundException {
       log.info("........................."+id);
 
-        return  new ResponseEntity<>(service.updateCategory(id, categoryDto),HttpStatus.INTERNAL_SERVER_ERROR);
+        return  new ResponseEntity<>(service.updateCategory(id, categoryDto),HttpStatus.CREATED);
 
     }
 
 
     @GetMapping("/{name}/categoryName")
     public ResponseEntity<CategoryDto> findByCategoryName(@PathVariable("name") String name){
-        return new ResponseEntity<>(service.findByCategoryName(name),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(service.findByCategoryName(name),HttpStatus.ACCEPTED);
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteByCatId(@PathVariable("id") Long name)throws IdNotFoundException{
-        return new ResponseEntity<>(service.deleteCategory(name),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(service.deleteCategory(name),HttpStatus.ACCEPTED);
     }
 
 
     @GetMapping("/")
     public ResponseEntity<List<CategoryDto>> getAllCat(){
-       return  new ResponseEntity<>(service.getAllCategory(),HttpStatus.INTERNAL_SERVER_ERROR);
+       return  new ResponseEntity<>(service.getAllCategory(),HttpStatus.ACCEPTED);
     }
 }

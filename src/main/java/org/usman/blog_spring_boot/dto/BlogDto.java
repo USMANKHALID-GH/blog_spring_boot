@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.usman.blog_spring_boot.model.Cat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -16,6 +17,6 @@ public class BlogDto extends BaseDto {
     private String content;
     private String image;
     @NotNull(message="date created must be provided")
-    private Date dateCreated;
+    private LocalDateTime createdDate;
     private Cat cat;
 }

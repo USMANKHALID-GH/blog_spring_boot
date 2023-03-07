@@ -1,5 +1,6 @@
 package org.usman.blog_spring_boot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
@@ -24,10 +25,10 @@ public abstract class AbstractModel implements Serializable {
     private static final long serialVersionUID=1L;
 
     @CreatedDate
-    @NotNull(message = "date cant be null")
-    @Column(name = "created_date",updatable = false
-    ,columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
+    @JsonIgnore
+    @Column(name = "created_date",updatable = false)
     private LocalDateTime createdDate;
+
 
     @PrePersist
     private void perPersist(){
