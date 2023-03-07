@@ -1,14 +1,11 @@
-package org.usman.blog_spring_boot.utility;
+package org.usman.blog_spring_boot.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Valid
 @Data
