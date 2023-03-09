@@ -1,5 +1,6 @@
 package org.usman.blog_spring_boot.service;
 
+import org.springframework.data.domain.Page;
 import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
 import org.usman.blog_spring_boot.model.Blog;
@@ -27,4 +28,6 @@ public interface BlogService {
     List<BlogGeneralDto> searchTitleOrContent(String string , String string1);
 
     List<BlogGeneralDto> findByCat(int integer);
+
+    List<BlogDto>    findByCategory(int integer);
 }

@@ -11,7 +11,7 @@ import org.usman.blog_spring_boot.service.implementation.Pagination_Sorting;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/pi/v1")
 public class PaginationApi {
     @Autowired
     private Pagination_Sorting pagination_sorting;
@@ -34,13 +34,13 @@ public class PaginationApi {
 
     }
 
-    @GetMapping(path = {"/get1","/get1/{id}"})
-    public  String get(@PathVariable(value = "id", required = false) Integer id){
-        if(id==null){
-        return "just testing  ";}
-        else
-            return id+" yeahhhh";
-    }
+//    @GetMapping(path = {"/get1","/get1/{id}"})
+//    public  String get(@PathVariable(value = "id", required = false) Integer id){
+//        if(id==null){
+//        return "just testing  ";}
+//        else
+//            return id+" yeahhhh";
+//    }
 
 
 }

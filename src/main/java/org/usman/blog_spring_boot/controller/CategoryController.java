@@ -35,7 +35,7 @@ public class CategoryController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> findCategoryById(@PathVariable("id") Long id)throws IdNotFoundException{
+    public ResponseEntity<CategoryDto> findCategoryById(@PathVariable("id") Long id){
 
          return  new ResponseEntity<>(service.findCategory(id),HttpStatus.ACCEPTED);
 
@@ -43,7 +43,7 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public  ResponseEntity<String> updatecat(@PathVariable("id") Long id,
-                             @RequestBody @Valid CategoryDto categoryDto)throws IdNotFoundException {
+                             @RequestBody @Valid CategoryDto categoryDto){
       log.info("........................."+id);
 
         return  new ResponseEntity<>(service.updateCategory(id, categoryDto),HttpStatus.CREATED);
@@ -51,14 +51,14 @@ public class CategoryController {
     }
 
 
-    @GetMapping("/{name}/categoryName")
+    @GetMapping("/{name}/category_name")
     public ResponseEntity<CategoryDto> findByCategoryName(@PathVariable("name") String name){
         return new ResponseEntity<>(service.findByCategoryName(name),HttpStatus.ACCEPTED);
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteByCatId(@PathVariable("id") Long name)throws IdNotFoundException{
+    public ResponseEntity<String> deleteByCatId(@PathVariable("id") Long name){
         return new ResponseEntity<>(service.deleteCategory(name),HttpStatus.ACCEPTED);
     }
 

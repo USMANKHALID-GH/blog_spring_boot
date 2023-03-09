@@ -2,11 +2,14 @@ package org.usman.blog_spring_boot.service.implementation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.error.IdNotFoundException;
 import org.usman.blog_spring_boot.error.PhraseNotFoundEXception;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
 import org.usman.blog_spring_boot.dto.CategoryDto;
+import org.usman.blog_spring_boot.mapper.EntityMapper;
 import org.usman.blog_spring_boot.mapper.MapperDto;
 import org.usman.blog_spring_boot.respository.BlogRepository;
 import org.usman.blog_spring_boot.respository.CategoryRepository;
@@ -33,6 +36,9 @@ public class CategoryServiceImp implements BlogService, CategoryService {
     private CategoryRepository categoryRepository;
     @Autowired
     private MapperDto mapper;
+
+    @Autowired
+    private EntityMapper entityMapper;
 
 
     @Override
@@ -156,6 +162,7 @@ public class CategoryServiceImp implements BlogService, CategoryService {
 
 
 
+
     @Override
     public BlogGeneralDto saveBlog(BlogGeneralDto blogGeneralDto, Long id) {
 
@@ -249,7 +256,11 @@ public class CategoryServiceImp implements BlogService, CategoryService {
     }
 
 
-
+    @Override
+    public List<BlogDto> findByCategory(int integer) {
+           List<Blog> blogs=blogRepository.findAllByCategory(integer).getContent();
+        return entityMapper.toDto(blogs);
+    }
 
 
 }

@@ -16,7 +16,7 @@ import org.usman.blog_spring_boot.service.implementation.CategoryServiceImp;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/blog")
+@RequestMapping("/api/v1/blog")
 public class BlogController {
 
     @Autowired
@@ -34,18 +34,6 @@ public class BlogController {
          return  new ResponseEntity<>(service.saveBlog(blogGeneralDto,id), HttpStatus.CREATED);
 }
 
-
-    @GetMapping("/")
-    public ResponseEntity<List<BlogGeneralDto>>showAllBlog(){
-        return  new ResponseEntity<>(service.showAllBlog(),HttpStatus.ACCEPTED);
-    }
-
-    @GetMapping("{id}")
-    public ResponseEntity<BlogGeneralDto> findBlogById(@PathVariable("id") Long id)throws IdNotFoundException{
-        return new ResponseEntity<>(service.FindByBlogId(id),HttpStatus.ACCEPTED);
-    }
-
-
     @GetMapping("/all")
     public ResponseEntity<List<BlogDto>> AllBlog(){
 
@@ -53,11 +41,25 @@ public class BlogController {
 
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<BlogGeneralDto>>showAllBlog(){
+        return  new ResponseEntity<>(service.showAllBlog(),HttpStatus.ACCEPTED);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BlogGeneralDto> findBlogById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(service.FindByBlogId(id),HttpStatus.ACCEPTED);
+    }
+
+
+
+
 
 
     @PutMapping("/{id}")
     public  ResponseEntity<String> updateCategory(@PathVariable("id") Long id,
-                             @RequestBody @Valid BlogGeneralDto catDto)throws IdNotFoundException{
+                             @RequestBody @Valid BlogGeneralDto catDto){
 
 
           return new ResponseEntity<>(service.updateBlog(id,catDto),HttpStatus.ACCEPTED);
@@ -71,26 +73,26 @@ public class BlogController {
 
 
     @GetMapping("/{sentence}/search")
-    public  ResponseEntity<List<BlogGeneralDto>> searchForPhrase(@PathVariable("sentence") String sentence) throws PhraseNotFoundEXception {
+    public  ResponseEntity<List<BlogGeneralDto>> searchForPhrase(@PathVariable("sentence") String sentence){
             return  new ResponseEntity<>(service.searchInContent(sentence) ,HttpStatus.ACCEPTED);
     }
 
 
         @GetMapping("/{string}/title")
-        public ResponseEntity<List<BlogGeneralDto>> SearchTitle(@PathVariable("string") String string) throws  PhraseNotFoundEXception{
+        public ResponseEntity<List<BlogGeneralDto>> SearchTitle(@PathVariable("string") String string) {
          return new ResponseEntity<>(service.searchInTitle(string) , HttpStatus.ACCEPTED);
         }
 
 
     @GetMapping("/{string}/title_content")
-    public ResponseEntity<List<BlogGeneralDto>> SearchAny(@PathVariable("string") String string) throws  PhraseNotFoundEXception {
+    public ResponseEntity<List<BlogGeneralDto>> SearchAny(@PathVariable("string") String string)  {
         return  new ResponseEntity<>(service.searchTitleOrContent(string,string),HttpStatus.ACCEPTED);
     }
 
 
 
     @GetMapping("/{id}/category")
-    public ResponseEntity<List<BlogGeneralDto>> SearchByCat(@PathVariable("id") int id) throws IdNotFoundException {
+    public ResponseEntity<List<BlogGeneralDto>> SearchByCat(@PathVariable("id") int id)  {
         return  new ResponseEntity<>(service.findByCat(id),HttpStatus.ACCEPTED);
     }
 
