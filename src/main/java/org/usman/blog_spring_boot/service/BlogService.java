@@ -29,5 +29,5 @@ public interface BlogService {
 
     List<BlogGeneralDto> findByCat(int integer);
 
-    List<BlogDto>    findByCategory(int integer);
+//    List<BlogDto>    findByCategory(int integer);
 }

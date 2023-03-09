@@ -2,7 +2,10 @@ package org.usman.blog_spring_boot.service.implementation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.error.IdNotFoundException;
@@ -256,11 +259,12 @@ public class CategoryServiceImp implements BlogService, CategoryService {
     }
 
 
-    @Override
-    public List<BlogDto> findByCategory(int integer) {
-           List<Blog> blogs=blogRepository.findAllByCategory(integer).getContent();
-        return entityMapper.toDto(blogs);
-    }
+//    @Override
+//    public List<BlogDto> findByCategory(int integer) {
+//           List<Blog> blogs=blogRepository.findAllByCategory(integer).getContent();
+//        return entityMapper.toDto(blogs);
+//
+//    }
 
 
 }

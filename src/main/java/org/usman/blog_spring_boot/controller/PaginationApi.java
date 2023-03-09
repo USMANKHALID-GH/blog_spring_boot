@@ -1,46 +1,53 @@
 package org.usman.blog_spring_boot.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.usman.blog_spring_boot.dto.BlogGeneralDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.usman.blog_spring_boot.dto.BaseResponseDto;
+import org.usman.blog_spring_boot.dto.BlogDto;
+
+import org.usman.blog_spring_boot.mapper.BlogMapper;
+
+import org.usman.blog_spring_boot.model.Blog;
 import org.usman.blog_spring_boot.service.implementation.Pagination_Sorting;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
-@RequestMapping("/pi/v1")
+@RequestMapping("/pi/v1/page")
 public class PaginationApi {
     @Autowired
-    private Pagination_Sorting pagination_sorting;
+    private Pagination_Sorting service;
 
-    //   pagination and sorting
+    @Autowired
+    private BlogMapper mapper;
 
-    @GetMapping(path = {"/get/{offset}/{pageSize}/{field}/{order}","/get"
-    ,"/get/{offset}", "/get/{offset}/{pageSize}","/get/{offset}/{pageSize}/{field}"})
-    public List<BlogGeneralDto> getAll(@PathVariable(value = "offset", required = false) Integer offset,
-                                       @PathVariable(value = "pageSize",required = false)  Integer pageSize,
-                                       @PathVariable(value = "field",required = false )String field,
-                                       @PathVariable(value = "order",required = false) String order
-                                       ){
 
-        if(order==null){
-            return  pagination_sorting.getAll(offset,pageSize,field,"desc");
-        }
-        else
-            return  pagination_sorting.getAll(offset,pageSize,field,order);
-
+    @PostMapping
+    public ResponseEntity<BaseResponseDto> create(@RequestBody BlogDto categoryDto) {
+        service.create(mapper.toEntity(categoryDto));
+        return ResponseEntity.ok(BaseResponseDto.builder().message("Category oluşturma işlemi başarılı olarak tamamlanmıştır").build());
     }
 
-//    @GetMapping(path = {"/get1","/get1/{id}"})
-//    public  String get(@PathVariable(value = "id", required = false) Integer id){
-//        if(id==null){
-//        return "just testing  ";}
-//        else
-//            return id+" yeahhhh";
-//    }
 
+    @GetMapping("/blog")
+    public ResponseEntity<Page<BlogDto>> findAll(Pageable pageable, @RequestParam(required = false, name = "search") int search) {
+        return ResponseEntity.ok(new PageImpl<>(mapper.toDto(service.findAll(pageable,search).getContent())));
+    }
+
+    @GetMapping("/blog1")
+    public Page<BlogDto> findAll1(Pageable pageable, @RequestParam(required = false, name = "search") int search) {
+      Page<Blog> blogs=service.findAll(pageable,search);
+
+      List<BlogDto>  blogDtos=mapper.toDto(blogs.getContent());
+      return new PageImpl<>(blogDtos);
+//
+    }
 
 }
