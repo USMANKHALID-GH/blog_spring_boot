@@ -41,13 +41,4 @@ public class PaginationApi {
         return ResponseEntity.ok(new PageImpl<>(mapper.toDto(service.findAll(pageable,search).getContent())));
     }
 
-    @GetMapping("/blog1")
-    public Page<BlogDto> findAll1(Pageable pageable, @RequestParam(required = false, name = "search") int search) {
-      Page<Blog> blogs=service.findAll(pageable,search);
-
-      List<BlogDto>  blogDtos=mapper.toDto(blogs.getContent());
-      return new PageImpl<>(blogDtos);
-//
-    }
-
 }
