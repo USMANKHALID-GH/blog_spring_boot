@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import org.usman.blog_spring_boot.dto.BaseResponseDto;
 import org.usman.blog_spring_boot.dto.BlogDto;
 
-import org.usman.blog_spring_boot.error.IdNotFoundException;
+
 import org.usman.blog_spring_boot.mapper.BlogMapper;
 
-import org.usman.blog_spring_boot.model.Blog;
+
 import org.usman.blog_spring_boot.service.implementation.Pagination_Sorting;
 
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Slf4j
 @RestController
@@ -53,4 +52,15 @@ public class PaginationApi {
         service.deleteBlogBYId(id);
         return ResponseEntity.ok(BaseResponseDto.builder().message("blog başarılı olarak silinmıştır").build());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BaseResponseDto> updateBlog(@PathVariable("id") Long id, @RequestBody BlogDto blogDto) {
+        log.info(".........................."+id);
+        service.updateBlogId(id ,blogDto);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("blog başarılı olarak guncelenmıştır").build());
+    }
+
+
+
+
 }
