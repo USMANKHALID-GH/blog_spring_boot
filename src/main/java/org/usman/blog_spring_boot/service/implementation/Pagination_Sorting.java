@@ -7,9 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
+import org.usman.blog_spring_boot.error.IdNotFoundException;
 import org.usman.blog_spring_boot.model.AbstractModel;
 import org.usman.blog_spring_boot.model.Blog;
 import org.usman.blog_spring_boot.respository.BlogRepository;
+
+import java.util.Optional;
 
 @Service
 public class Pagination_Sorting {
@@ -21,7 +24,25 @@ public class Pagination_Sorting {
          blogRepository.save(toEntity);
     }
 
-    public Page<Blog> findAll(Pageable pageable, int search) {
-        return blogRepository.findAll(pageable,search);
+    public Page<Blog> findAllByCategory(Pageable pageable, int search) {
+        return   blogRepository.findAllByCategory(pageable,search);
+
+    }
+
+
+    public  Blog findBlogBYId(Long integer) {
+        return Optional.ofNullable(blogRepository.findById(integer)).get().orElseThrow(
+                ()->new IdNotFoundException("there is such Id in our System "+integer)
+        );
+    }
+
+    public  void deleteBlogBYId(Long integer) {
+        Blog blog=  Optional.ofNullable(blogRepository.findById(integer)).get().orElseThrow(
+                ()->new IdNotFoundException("there is such Id in our System "+integer)
+        );
+
+        blogRepository.delete(blog);
+
+
     }
 }

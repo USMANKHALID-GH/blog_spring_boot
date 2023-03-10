@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.usman.blog_spring_boot.dto.BaseResponseDto;
 import org.usman.blog_spring_boot.dto.BlogDto;
 
+import org.usman.blog_spring_boot.error.IdNotFoundException;
 import org.usman.blog_spring_boot.mapper.BlogMapper;
 
 import org.usman.blog_spring_boot.model.Blog;
@@ -37,8 +38,17 @@ public class PaginationApi {
 
 
     @GetMapping("/blog")
-    public ResponseEntity<Page<BlogDto>> findAll(Pageable pageable, @RequestParam(required = false, name = "search") int search) {
-        return ResponseEntity.ok(new PageImpl<>(mapper.toDto(service.findAll(pageable,search).getContent())));
+    public ResponseEntity<Page<BlogDto>> findAllBlogByCategory(Pageable pageable, @RequestParam(required = false, name = "search") int search) {
+        return ResponseEntity.ok(new PageImpl<>(mapper.toDto(service.findAllByCategory(pageable,search).getContent())));
     }
 
+    @GetMapping("/{id}")
+    public  ResponseEntity<BlogDto> findBlogById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(mapper.toDto(service.findBlogBYId(id)));
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BaseResponseDto> deleteBlog(@PathVariable("id") Long id) {
+        service.deleteBlogBYId(id);
+        return ResponseEntity.ok(BaseResponseDto.builder().message("blog başarılı olarak silinmıştır").build());
+    }
 }

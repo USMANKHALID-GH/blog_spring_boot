@@ -34,7 +34,7 @@ public interface BlogRepository  extends JpaRepository<Blog,Long> {
 
 
     @Query(value = "FROM Blog blog where blog.cat.id=:id")
-    Page<Blog>   findAll(Pageable pageable, @Param("id") int id);
+    Page<Blog>   findAllByCategory(Pageable pageable, @Param("id") int id);
 
 
 }
