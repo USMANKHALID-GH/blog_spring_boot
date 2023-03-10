@@ -38,7 +38,7 @@ public class PaginationApi {
 
 
     @GetMapping("/blog")
-    public ResponseEntity<Page<BlogDto>> findAllBlogByCategory(Pageable pageable, @RequestParam(required = false, name = "search") int search) {
+    public ResponseEntity<Page<BlogDto>> findAllBlogByCategory(Pageable pageable, @RequestParam( name = "search") int search) {
         return ResponseEntity.ok(new PageImpl<>(mapper.toDto(service.findAllByCategory(pageable,search).getContent())));
     }
 
@@ -46,6 +46,8 @@ public class PaginationApi {
     public  ResponseEntity<BlogDto> findBlogById(@PathVariable("id") Long id){
         return ResponseEntity.ok(mapper.toDto(service.findBlogBYId(id)));
     }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponseDto> deleteBlog(@PathVariable("id") Long id) {
         service.deleteBlogBYId(id);
