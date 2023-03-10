@@ -14,7 +14,8 @@ import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.mapper.BlogMapper;
 
 
-import org.usman.blog_spring_boot.service.implementation.Pagination_Sorting;
+import org.usman.blog_spring_boot.service.PaginationService;
+
 
 
 
@@ -23,13 +24,15 @@ import org.usman.blog_spring_boot.service.implementation.Pagination_Sorting;
 @RequestMapping("/pi/v1/page")
 public class PaginationApi {
     @Autowired
-    private Pagination_Sorting service;
+    private PaginationService service;
 
     @Autowired
     private BlogMapper mapper;
 
 
-    @PostMapping
+
+
+    @PostMapping("/")
     public ResponseEntity<BaseResponseDto> create(@RequestBody BlogDto categoryDto) {
         service.create(mapper.toEntity(categoryDto));
         return ResponseEntity.ok(BaseResponseDto.builder().message("Category oluşturma işlemi başarılı olarak tamamlanmıştır").build());
@@ -37,8 +40,15 @@ public class PaginationApi {
 
 
     @GetMapping("/blog")
-    public ResponseEntity<Page<BlogDto>> findAllBlogByCategory(Pageable pageable, @RequestParam( name = "search") int search) {
-        return ResponseEntity.ok(new PageImpl<>(mapper.toDto(service.findAllByCategory(pageable,search).getContent())));
+    public ResponseEntity<Page<BlogDto>> findAllBlogByCategory(Pageable pageable, @RequestParam( name = "catId") int catId) {
+        return ResponseEntity.ok(new PageImpl<>(mapper.toDto(service.findAllByCategory(pageable,catId).getContent())));
+    }
+
+    @GetMapping("/")
+    public  ResponseEntity<Page<BlogDto>> findAll(Pageable pageable){
+
+        return   ResponseEntity.ok(new PageImpl<>(mapper.toDto(service.findAllBlog(pageable).getContent())));
+
     }
 
     @GetMapping("/{id}")
@@ -55,7 +65,7 @@ public class PaginationApi {
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponseDto> updateBlog(@PathVariable("id") Long id, @RequestBody BlogDto blogDto) {
-        log.info(".........................."+id);
+
         service.updateBlogId(id ,blogDto);
         return ResponseEntity.ok(BaseResponseDto.builder().message("blog başarılı olarak guncelenmıştır").build());
     }

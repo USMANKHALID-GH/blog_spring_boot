@@ -13,11 +13,12 @@ import org.usman.blog_spring_boot.error.IdNotFoundException;
 import org.usman.blog_spring_boot.model.AbstractModel;
 import org.usman.blog_spring_boot.model.Blog;
 import org.usman.blog_spring_boot.respository.BlogRepository;
+import org.usman.blog_spring_boot.service.PaginationService;
 
 import java.util.Optional;
 
 @Service
-public class Pagination_Sorting {
+public class Pagination_Sorting  implements PaginationService {
     @Autowired
     private BlogRepository blogRepository;
 
@@ -69,5 +70,9 @@ public class Pagination_Sorting {
         }
        blogRepository.save(blog);
 
+    }
+
+    public  Page<Blog> findAllBlog(Pageable pageable){
+        return blogRepository.findAll(pageable);
     }
 }

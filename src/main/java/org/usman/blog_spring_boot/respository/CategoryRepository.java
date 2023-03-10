@@ -8,5 +8,5 @@ import org.usman.blog_spring_boot.model.Cat;
 public interface CategoryRepository extends JpaRepository<Cat,Long> {
 
 //    searching in cat
-    public  Cat findCatByCategory(String name);
+Cat findCatByCategory(String name);
 }
