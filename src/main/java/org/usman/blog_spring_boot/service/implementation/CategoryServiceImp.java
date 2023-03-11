@@ -2,17 +2,12 @@ package org.usman.blog_spring_boot.service.implementation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.usman.blog_spring_boot.dto.BlogDto;
 import org.usman.blog_spring_boot.error.IdNotFoundException;
 import org.usman.blog_spring_boot.error.PhraseNotFoundEXception;
 import org.usman.blog_spring_boot.dto.BlogGeneralDto;
 import org.usman.blog_spring_boot.dto.CategoryDto;
-import org.usman.blog_spring_boot.mapper.EntityMapper;
+import org.usman.blog_spring_boot.mapper.BlogMapper;
 import org.usman.blog_spring_boot.mapper.MapperDto;
 import org.usman.blog_spring_boot.respository.BlogRepository;
 import org.usman.blog_spring_boot.respository.CategoryRepository;
@@ -41,7 +36,7 @@ public class CategoryServiceImp implements BlogService, CategoryService {
     private MapperDto mapper;
 
     @Autowired
-    private EntityMapper entityMapper;
+    private BlogMapper blogMapper;
 
 
     @Override
